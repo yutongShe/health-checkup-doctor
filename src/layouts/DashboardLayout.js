@@ -1,27 +1,32 @@
 import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
+import { Link as RouterLink, Outlet} from 'react-router-dom';
+// components
+import {
+  CssBaseline, 
+  Box, 
+  Toolbar, 
+  List, 
+  Typography,
+  Divider,
+  IconButton,
+  Container,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Drawer as MuiDrawer,
+  AppBar as MuiAppBar
+} from '@mui/material';
+// icons
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems } from '../components/ListItems';
-
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import BarChartIcon from '@mui/icons-material/BarChart';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © ZJUBIOMEDIT'}
+      {'Copyright 2021© ZJUBIOMEDIT'}
     </Typography>
   );
 }
@@ -109,13 +114,8 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Demo
+              健康体检项目管理医生工作平台
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -132,7 +132,20 @@ function DashboardContent() {
             </IconButton>
           </Toolbar>
           <Divider />
-          <List>{mainListItems}</List>
+          <List>
+            <ListItem button component={RouterLink} to="/dashboard/home">
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="主页" />
+            </ListItem>
+            <ListItem button component={RouterLink} to="/dashboard/history">
+              <ListItemIcon>
+                <BarChartIcon />
+              </ListItemIcon>
+              <ListItemText primary="历史记录" />
+            </ListItem>
+          </List>
         </Drawer>
         <Box
           component="main"
@@ -147,10 +160,8 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              
-            </Grid>
+          <Container maxWidth={false} sx={{ mt: 4, mb: 4 }}>
+            <Outlet />
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>
