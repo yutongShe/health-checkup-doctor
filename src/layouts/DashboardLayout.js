@@ -18,9 +18,10 @@ import {
   AppBar as MuiAppBar
 } from '@mui/material';
 // icons
+import FactCheckIcon from '@mui/icons-material/FactCheck';
+import GroupIcon from '@mui/icons-material/Group';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import BarChartIcon from '@mui/icons-material/BarChart';
 
 function Copyright(props) {
@@ -80,7 +81,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function DashboardContent() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -133,11 +134,17 @@ function DashboardContent() {
           </Toolbar>
           <Divider />
           <List>
-            <ListItem button component={RouterLink} to="/dashboard/home">
+            <ListItem button component={RouterLink} to="/dashboard/detail">
               <ListItemIcon>
-                <DashboardIcon />
+                <FactCheckIcon />
               </ListItemIcon>
-              <ListItemText primary="主页" />
+              <ListItemText primary="受检者详情" />
+            </ListItem>
+            <ListItem button component={RouterLink} to="/dashboard/current">
+              <ListItemIcon>
+                <GroupIcon />
+              </ListItemIcon>
+              <ListItemText primary="当前预约" />
             </ListItem>
             <ListItem button component={RouterLink} to="/dashboard/history">
               <ListItemIcon>

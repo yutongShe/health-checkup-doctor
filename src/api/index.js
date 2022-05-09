@@ -1,9 +1,15 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:3000/api';
-const loginUrl = baseUrl + '/login'
+// const baseUrl = 'http://localhost:8080';
+const baseUrl = 'https://exp.zjubiomedit.com/healthcheckup'
+const loginUrl = baseUrl + '/doctorLogin';
+const commitDoctorEvaluationUrl = baseUrl + '/doctorEvaluation';
+const getAppointmentDetailsUrl = baseUrl + '/appointment/getAppointmentDetails';
+
 
 export const loginApi = (userInfo) => axios.post(loginUrl, userInfo);
+export const getAppointmentDetailsApi = (userInfo) => axios.post(getAppointmentDetailsUrl, userInfo);
+export const commitDoctorEvaluationApi = (doctorEvaluation) => axios.post(commitDoctorEvaluationUrl, doctorEvaluation)
 
 // export const fetchPosts = () => axios.get(url);
 // export const createPost = (newPost) => axios.post(url, newPost);

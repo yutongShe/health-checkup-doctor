@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -21,7 +21,6 @@ import { loginApi } from '../../api';
 export default function LoginForm() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-
   const LoginSchema = Yup.object().shape({
     userid: Yup.string().required('用户名未填写'),
     password: Yup.string().required('密码未填写')
@@ -40,9 +39,12 @@ export default function LoginForm() {
         password: getFieldProps('password').value
       }
       loginApi(userInfo).then(function (response) {
-        console.log(response)
         if (response.data.flag === 200) {
-          navigate('/dashboard/home', { replace: true });
+          sessionStorage.setItem("username", response.data.username);
+          navigate('/dashboard/detail', { replace: true });
+        } else {
+          alert('请确认用户名和密码');
+          window.location.reload();
         }
       })
       .catch(function (error) {

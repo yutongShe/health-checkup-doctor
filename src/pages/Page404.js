@@ -36,7 +36,7 @@ export default function Page404() {
           sx={{ height: 260, mx: 'auto', my: { xs: 5, sm: 10 } }}
         />
 
-        <Button to="/dashboard/home" size="large" variant="contained" component={RouterLink}>
+        <Button to="/dashboard/detail" size="large" variant="contained" component={RouterLink}>
             回到首页
         </Button>
         </Box>

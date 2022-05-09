@@ -11,7 +11,8 @@ import {
   Button,
   Divider
 } from '@mui/material';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { TRANSFER } from '../../constants/actionTypes';
 
 function not(a, b) {
   return a.filter((value) => b.indexOf(value) === -1);
@@ -25,13 +26,30 @@ function union(a, b) {
   return [...a, ...not(b, a)];
 }
 
-export default function TransferList() {
+export default function TransferList() {  
+  
   const [checked, setChecked] = React.useState([]);
-  const [left, setLeft] = React.useState(['主要神经系统腱反射','四肢肌力','痛感觉','色觉','鼻咽（间接鼻咽镜）','全口牙病系统检查与治疗设计（软件）','基因杂交捕获类人乳头状瘤病毒分型分析HPV','凝血五项','乙肝五项','血清四项','血沉（红细胞沉降率测定）']);
+  const [left, setLeft] = React.useState([]);  
   const [right, setRight] = React.useState([]);
-
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
+
+  const dispatch = useDispatch();
+  dispatch({type: TRANSFER, payload: {doctorNotRecommend:left,doctorRecommend:right}})
+  
+  // 获取系统推荐结果
+  let systemRecommendation = useSelector((state) => state.posts.itemsRecommendation);
+  // 在系统推荐结果改变时，修改系统决策左侧的init数组
+  React.useEffect(()=>{
+    const leftInit = [];
+    systemRecommendation.forEach(element => {
+      if (!leftInit.includes(element.itemName)) {
+        leftInit.push(element.itemName);
+      }
+    })
+    setLeft(leftInit);
+  },[systemRecommendation]);
+
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -61,7 +79,7 @@ export default function TransferList() {
     setLeft(not(left, leftChecked));
     setChecked(not(checked, leftChecked));
   };
-
+  
   const handleCheckedLeft = () => {
     setLeft(left.concat(rightChecked));
     setRight(not(right, rightChecked));
@@ -86,13 +104,13 @@ export default function TransferList() {
           />
         }
         title={title}
-        subheader={`${numberOfChecked(items)}/${items.length} selected`}
+        subheader={`${numberOfChecked(items)}/${items.length} 已选择`}
       />
       <Divider />
       <List
         sx={{
-          width: 400,
-          height: 400,
+          width: 340,
+          height: 340,
           bgcolor: 'background.paper',
           overflow: 'auto'
         }}

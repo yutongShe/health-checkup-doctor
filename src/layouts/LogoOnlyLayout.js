@@ -25,7 +25,7 @@ export default function LogoOnlyLayout() {
   return (
     <>
       <HeaderStyle>
-        <RouterLink to="/dashboard/home">
+        <RouterLink to="/dashboard/detail">
           <Box component="img" src={logo} sx={{ height: 40 }} />
         </RouterLink>
       </HeaderStyle>
